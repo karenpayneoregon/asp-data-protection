@@ -1,0 +1,136 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<script src="lib/payne-debugger/debugHelper.js"></script>
+
+<style>
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+</style>
+
+<link rel="stylesheet" href="css/sweetSheet.css" />
+<link rel="stylesheet" href="css/validationSummary.css" />
+<script type="text/javascript" src="lib/jquery/dist/jquery.js"></script>
+<script type="text/javascript" src="lib/limonte-sweetalert2/sweetalert2.all.min.js"></script>
+
+<div class="alert alert-primary" role="alert">
+    <h1 class="fs-5">Encryption<span class="text-danger">/</span>Hidden<span class="text-danger">/</span>Normal route data</h1>
+</div>
+
+<div class="d-none">
+    <input asp-for="Message" />
+</div>
+
+<hr />
+
+<div class="container border border-dark border-1 mt-4">
+
+    <div class="row">
+
+        <div style="background-color: #0f506f" class="text-white text-start p-2">
+            Sample for encrypt/decrypt data between pages
+        </div>
+
+        <form method="post">
+  
+            <div class="row mt-3">
+                <div class="col-2 ms-2">
+                    <label asp-for="Identifier" class="control-label">User</label>
+                </div>
+            </div>
+            <div class="row">
+  
+                <div class="col-lg-6 ms-sm-2">
+                    <select asp-for="Identifier" class="form-control" asp-items="ViewBag.UserId"></select>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-auto pt-2 ps-4 pb-2 ">
+
+                    <input type="submit"
+                           asp-page-handler="HiddenExample"
+                           value="Get user (hidden)" class="btn btn-primary " />
+
+                </div>
+
+                <div class="col-auto pt-2 ps-5 pb-2 ">
+
+                    <input type="submit"
+                           asp-page-handler="VisibleExample"
+                           value="Get user (visible)" class="btn btn-primary " />
+
+                </div>
+
+                <div class="col-auto pt-2 ps-5 pb-2 ">
+
+                    <input type="submit"
+                           asp-page-handler="NormalExample"
+                           value="Get user (normal)" class="btn btn-primary " />
+
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-4 pt-2 ps-5 pb-2 ">
+                    @* Message has data on model not validate *@
+                    @if (!string.IsNullOrWhiteSpace(@Model.Message))
+                    {
+                        <div class="alert alert-danger" align="center">
+                            <i class="bi bi bi-exclamation-triangle-fill"></i> @Model.Message
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+            <div class="row">
+                @*  *@
+            </div>
+
+        </form>
+
+    </div>
+
+    <div asp-validation-summary="All" class="valFailure"> </div>
+
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        let msg = $('#Message').val();
+
+        if (msg.length > 0) {
+
+            Swal.fire(msg);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: msg
+            });
+        }
+    });
+
+    /*
+    * Karen code
+    * CTRL+ALT+1 toggles adding/removing debugger.css
+    */
+    document.addEventListener('keydown', function (event) {
+
+        if (event.key === '1' && event.altKey && event.ctrlKey) {
+            $debugHelper.toggle();
+        }
+
+    });
+</script>
+

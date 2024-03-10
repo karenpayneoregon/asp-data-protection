@@ -1,0 +1,76 @@
+﻿@page
+@model Project1.Pages.EditModel
+
+<script src="lib/payne-debugger/debugHelper.js"></script>
+
+@{
+    ViewData["Title"] = "Edit user";
+}
+
+<div class="alert alert-primary" role="alert">
+    <h1 class="fs-5">Edit user identifier <span class="fw-bold bg-danger text-white ps-2 pe-2 border border-dark">@Model.Identifier</span> </h1>
+</div>
+
+<div class="d-none">
+    <input asp-for="Message" />
+</div>
+
+<hr />
+<div class="row">
+
+    <div class="col-md-4">
+
+        <form method="post">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger" id="valArea"></div>
+            <input type="hidden" id="id" asp-for="UserLogin.Id"/>
+
+            <div>
+                <label asp-for="UserLogin.EmailAddress" class="control-label"></label>
+                <input asp-for="UserLogin.EmailAddress" class="form-control"/>
+                <span asp-validation-for="UserLogin.EmailAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserLogin.Pin" class="control-label"></label>
+                <input asp-for="UserLogin.Pin" class="form-control"/>
+                <span asp-validation-for="UserLogin.Pin" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2">
+                <div class="row">
+                    <div class="col-3">
+                        <input type="submit" id="submit" value="Save" class="btn btn-primary"/>
+                    </div>
+                    <div class="col-3 ms-2">
+
+                        <input type="submit" id="submit1"
+                               asp-page-handler="GoHome"
+                               value="Back to index page" class="btn btn-primary"/>
+
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        /*
+        * Karen code
+        * CTRL+ALT+1 toggles adding/removing debugger.css
+        */
+        document.addEventListener('keydown', function (event) {
+
+            if (event.key === '1' && event.altKey && event.ctrlKey) {
+                $debugHelper.toggle();
+            }
+
+        });
+    </script>
+}
