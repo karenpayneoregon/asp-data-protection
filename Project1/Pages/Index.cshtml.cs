@@ -37,12 +37,6 @@ public class IndexModel : PageModel
     public void OnGet()
     {
 
-        UserOptions = _context.UserLogin.AsNoTracking().ToList().Select(x => new SelectListItem()
-        {
-            Value = x.Id.ToString(),
-            Text = x.EmailAddress
-        }).ToList();
-
         ViewData["UserId"] = new SelectList(_context.UserLogin.AsNoTracking(), "Id", "EmailAddress");
 
     }
